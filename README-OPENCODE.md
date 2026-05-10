@@ -4,6 +4,10 @@
 
 This is a modified version of free-claude-code that includes **built-in OpenCode AI support**. No separate proxy setup needed — just add your OpenCode API key and go!
 
+## Quick Start
+
+**New here?** Read the [Complete Setup Guide](SETUP-GUIDE.md) for step-by-step instructions.
+
 ## Features
 
 - Access **40+ models** from OpenCode AI
