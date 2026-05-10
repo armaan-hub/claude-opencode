@@ -46,29 +46,36 @@ echo 'MODEL=opencode/minimax-m2.5-free' >> .env
 
 ## Usage
 
-### Option 1: Full Permissions Mode (Recommended for Development)
+### Free Tier (No API Key Needed)
 
 ```bash
 ./claude-opencode-full.sh
 ```
+Uses the free API key — 3 free models available.
 
-This uses `claude --dangerously-skip-permissions` — gives full folder access.
+### OpenCode Go Plan (All 40+ Models)
 
-**Model options:**
-```bash
-./claude-opencode-full.sh          # Default: minimax-m2.5-free
-./claude-opencode-full.sh qwen3.6-plus    # Use Qwen
-./claude-opencode-full.sh claude-opus-4-7  # Use Claude Opus
-./claude-opencode-full.sh ring-2.6-1t-free # Use Ring (free)
-```
-
-### Option 2: Safe Mode (Asks for Permissions)
+1. Get your Go plan API key from [opencode.ai/settings/api](https://opencode.ai/settings/api)
+2. Set it as an environment variable:
 
 ```bash
-./claude-opencode.sh
+export OPENCODE_API_KEY='your-go-plan-key'
 ```
 
-This uses plain `claude` — will ask for permission when needed.
+3. Run with any model:
+
+```bash
+./claude-opencode-full.sh claude-opus-4-7      # Claude Opus
+./claude-opencode-full.sh qwen3.6-plus         # Qwen 3.6
+./claude-opencode-full.sh gpt-5.5              # GPT-5
+./claude-opencode-full.sh gemini-3.1-pro       # Gemini 3.1 Pro
+```
+
+### Safe Mode (Asks for Permissions)
+
+```bash
+OPENCODE_API_KEY="sk-..." ./claude-opencode.sh qwen3.6-plus
+```
 
 ## Available Models
 

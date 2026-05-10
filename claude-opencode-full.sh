@@ -1,14 +1,39 @@
 #!/bin/bash
 # Claude Code + OpenCode via free-claude-code proxy - WITH FULL PERMISSIONS
-# Usage: ~/claude-opencode-full.sh [model-name]
+# Usage:
+#   ~/claude-opencode-full.sh                     # Free tier: minimax-m2.5-free
+#   OPENCODE_API_KEY="sk-..." ~/claude-opencode-full.sh           # Go plan with default model
+#   OPENCODE_API_KEY="sk-..." ~/claude-opencode-full.sh qwen3.6-plus  # Go plan with specific model
+#   ~/claude-opencode-full.sh claude-opus-4-7                      # Go plan model (requires API key)
+#
+# Model options (all available via Go plan):
+#   Free: minimax-m2.5-free, ring-2.6-1t-free, nemotron-3-super-free
+#   Paid: claude-opus-4-7, claude-sonnet-4-6, claude-haiku-4-5, qwen3.6-plus,
+#         qwen3.5-plus, gemini-3.1-pro, gemini-3-flash, gpt-5.5, gpt-5.4, etc.
 
 set -e
 
-# Configuration
+# Configuration - use env var if set, otherwise free tier API key
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS"
+API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
 MODEL="${1:-minimax-m2.5-free}"
+
+# Check if model needs Go plan
+FREE_MODELS="minimax-m2.5-free ring-2.6-1t-free nemotron-3-super-free"
+if [[ ! " $FREE_MODELS " =~ " $MODEL " ]] && [ -z "$OPENCODE_API_KEY" ]; then
+    echo "WARNING: Model '$MODEL' requires OpenCode Go plan."
+    echo "Set your Go plan API key first:"
+    echo "  export OPENCODE_API_KEY='your-go-plan-key'"
+    echo ""
+    echo "Get your API key at: https://opencode.ai/settings/api"
+    echo ""
+    read -p "Continue anyway? (y/N) " -n 1 -r
+    echo
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        exit 1
+    fi
+fi
 
 # Colors
 RED='\033[0;31m'

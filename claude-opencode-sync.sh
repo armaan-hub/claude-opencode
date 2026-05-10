@@ -1,48 +1,30 @@
 #!/bin/bash
-# Sync all Claude Code sessions to free-claude-code folder
-# This ensures /resume shows ALL your conversation history
+# Claude Code + OpenCode via free-claude-code proxy - WITH SESSION SYNC
+# Usage:
+#   ./claude-opencode-sync.sh                        # Free tier: minimax-m2.5-free
+#   OPENCODE_API_KEY="sk-..." ./claude-opencode-sync.sh qwen3.6-plus  # Go plan model
 
 set -e
 
-TARGET_DIR="$HOME/free-claude-code"
+# Session sync
 SESSION_DIR="$HOME/.claude/projects"
 DEST_DIR="$SESSION_DIR/-Users-armaan-free-claude-code"
-
-echo "Syncing all Claude Code sessions to free-claude-code folder..."
-
-# Create destination if not exists
+echo "Syncing sessions..."
 mkdir -p "$DEST_DIR"
-
-# Find all .jsonl session files in projects folder
-SESSION_FILES=$(find "$SESSION_DIR" -name "*.jsonl" -type f 2>/dev/null)
-
-# Copy all session files (skip if already exists and same size)
 COUNT=0
-for file in $SESSION_FILES; do
-    filename=$(basename "$file")
-    dest="$DEST_DIR/$filename"
-
-    # Copy if destination doesn't exist or source is newer/larger
-    if [ ! -f "$dest" ] || [ "$file" -nt "$dest" ]; then
-        cp "$file" "$dest"
-        COUNT=$((COUNT + 1))
-    fi
+for file in $(find "$SESSION_DIR" -name "*.jsonl" -type f 2>/dev/null); do
+    fname=$(basename "$file")
+    dest="$DEST_DIR/$fname"
+    [ ! -f "$dest" ] || [ "$file" -nt "$dest" ] && cp "$file" "$dest" && COUNT=$((COUNT + 1))
 done
+echo "Synced $COUNT session files"
 
-echo "Synced $COUNT new session files to free-claude-code"
-echo "Total sessions now available: $(ls "$DEST_DIR"/*.jsonl 2>/dev/null | wc -l | tr -d ' ')"
-
-# Now run the actual free-claude-code launcher
-echo ""
-echo "Starting Claude Code with OpenCode AI..."
-
-# Change to target directory
-cd "$TARGET_DIR"
+cd ~/free-claude-code
 
 # Configuration
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS"
+API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
 MODEL="${1:-minimax-m2.5-free}"
 
 # Colors
