@@ -118,6 +118,9 @@ class Settings(BaseSettings):
     # ==================== Wafer Config ====================
     wafer_api_key: str = Field(default="", validation_alias="WAFER_API_KEY")
 
+    # ==================== OpenCode Config ====================
+    opencode_api_key: str = Field(default="", validation_alias="OPENCODE_API_KEY")
+
     # ==================== Messaging Platform Selection ====================
     # Valid: "telegram" | "discord" | "none"
     messaging_platform: str = Field(
