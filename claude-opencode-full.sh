@@ -34,12 +34,18 @@ export MODEL="opencode/$MODEL"
 uv run free-claude-code > /tmp/free-claude-code.log 2>&1 &
 PROXY_PID=$!
 
-# Wait for proxy to be ready
+# Wait for proxy to be ready AND model list to be populated
 echo "Waiting for proxy to start..."
+MODEL_COUNT=0
 for i in {1..30}; do
     if curl -s "$PROXY_URL" > /dev/null 2>&1; then
-        echo -e "${GREEN}Proxy started!${NC}"
-        break
+        # Check if model list has loaded
+        MODEL_COUNT=$(curl -s "$PROXY_URL/v1/models" -H "x-api-key: freecc" 2>/dev/null | python3 -c "import json,sys; d=json.load(sys.stdin); print(len(d.get('data',[])))" 2>/dev/null || echo "0")
+        if [ "$MODEL_COUNT" -gt 10 ]; then
+            echo -e "${GREEN}Proxy started with $MODEL_COUNT models!${NC}"
+            break
+        fi
+        echo "  Loading models... ($MODEL_COUNT so far)"
     fi
     if ! kill -0 $PROXY_PID 2>/dev/null; then
         echo -e "${RED}Proxy failed!${NC}"
@@ -49,7 +55,16 @@ for i in {1..30}; do
     sleep 1
 done
 
+if [ "$MODEL_COUNT" -le 10 ]; then
+    echo -e "${YELLOW}Warning: Only $MODEL_COUNT models loaded (may be still loading)${NC}"
+fi
+
+echo -e "${GREEN}Proxy URL: $PROXY_URL${NC}"
+echo -e "${GREEN}Model: $MODEL${NC}"
+echo ""
+
 # Run Claude Code WITH full permissions (--dangerously-skip-permissions)
+echo -e "${YELLOW}Starting Claude Code with full permissions...${NC}"
 ANTHROPIC_AUTH_TOKEN="freecc" \
 ANTHROPIC_BASE_URL="$PROXY_URL" \
 CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1 \

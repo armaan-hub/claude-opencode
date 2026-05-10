@@ -26,6 +26,13 @@ This is a modified version of free-claude-code that includes **built-in OpenCode
 
 Your Go plan API key has been configured in all launcher scripts. All 40+ models are available in the model list, but some premium models (Claude Opus, GPT-5, etc.) may show "Insufficient balance" errors until you add credits to your OpenCode account.
 
+**Important:** Remove any conflicting settings from `~/.claude/settings.json`:
+- Remove `ANTHROPIC_BASE_URL` (if set to opencode.ai)
+- Remove `ANTHROPIC_API_KEY` (if set to a direct API key)
+- Remove `ANTHROPIC_MODEL` (if set)
+
+These settings can conflict with the local proxy. The proxy handles routing automatically.
+
 **Free models work without credits:** minimax-m2.5-free, ring-2.6-1t-free, nemotron-3-super-free
 
 Add credits at: https://opencode.ai/workspace/wrk_01KR4PY4NW8JA6MY8GYCD2DXP1/billing
