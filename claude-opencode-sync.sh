@@ -24,7 +24,7 @@ cd ~/free-claude-code
 # Configuration
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="${OPENCODE_API_KEY:-sk-GrYsoSdvuAdQ27saHPsUA3NH25VgvbVJYST3JhB4l3ZemldbPQv591mHWEnxxRjv}"
+API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
 MODEL="${1:-minimax-m2.5-free}"
 
 # Colors
