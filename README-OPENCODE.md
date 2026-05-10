@@ -1,6 +1,6 @@
 # Claude Code + OpenCode AI
 
-**OpenCode-integrated Claude Code** — run Claude Code with OpenCode AI models for free!
+**OpenCode-integrated Claude Code** — run Claude Code with OpenCode AI models!
 
 This is a modified version of free-claude-code that includes **built-in OpenCode AI support**. No separate proxy setup needed — just add your OpenCode API key and go!
 
@@ -20,7 +20,15 @@ This is a modified version of free-claude-code that includes **built-in OpenCode
 
 - [Claude Code CLI](https://github.com/anthropics/claude-code)
 - [uv](https://github.com/astral-sh/uv) (Python package manager)
-- OpenCode AI API key (free tier available)
+- OpenCode AI API key (free tier or Go plan)
+
+## Status: Go Plan Configured ✓
+
+Your Go plan API key has been configured in all launcher scripts. All 40+ models are available in the model list, but some premium models (Claude Opus, GPT-5, etc.) may show "Insufficient balance" errors until you add credits to your OpenCode account.
+
+**Free models work without credits:** minimax-m2.5-free, ring-2.6-1t-free, nemotron-3-super-free
+
+Add credits at: https://opencode.ai/workspace/wrk_01KR4PY4NW8JA6MY8GYCD2DXP1/billing
 
 ## Installation
 
@@ -55,14 +63,9 @@ Uses the free API key — 3 free models available.
 
 ### OpenCode Go Plan (All 40+ Models)
 
-1. Get your Go plan API key from [opencode.ai/settings/api](https://opencode.ai/settings/api)
-2. Set it as an environment variable:
+Your Go plan API key is already configured in all scripts.
 
-```bash
-export OPENCODE_API_KEY='your-go-plan-key'
-```
-
-3. Run with any model:
+Run with any model:
 
 ```bash
 ./claude-opencode-full.sh claude-opus-4-7      # Claude Opus
@@ -70,6 +73,8 @@ export OPENCODE_API_KEY='your-go-plan-key'
 ./claude-opencode-full.sh gpt-5.5              # GPT-5
 ./claude-opencode-full.sh gemini-3.1-pro       # Gemini 3.1 Pro
 ```
+
+> **Note:** Some premium models require credits in your OpenCode account. Free models work without credits.
 
 ### Safe Mode (Asks for Permissions)
 

@@ -13,27 +13,11 @@
 
 set -e
 
-# Configuration - use env var if set, otherwise free tier API key
+# Configuration - use env var if set, otherwise Go plan API key (all 40+ models)
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
+API_KEY="${OPENCODE_API_KEY:-sk-GrYsoSdvuAdQ27saHPsUA3NH25VgvbVJYST3JhB4l3ZemldbPQv591mHWEnxxRjv}"
 MODEL="${1:-minimax-m2.5-free}"
-
-# Check if model needs Go plan
-FREE_MODELS="minimax-m2.5-free ring-2.6-1t-free nemotron-3-super-free"
-if [[ ! " $FREE_MODELS " =~ " $MODEL " ]] && [ -z "$OPENCODE_API_KEY" ]; then
-    echo "WARNING: Model '$MODEL' requires OpenCode Go plan."
-    echo "Set your Go plan API key first:"
-    echo "  export OPENCODE_API_KEY='your-go-plan-key'"
-    echo ""
-    echo "Get your API key at: https://opencode.ai/settings/api"
-    echo ""
-    read -p "Continue anyway? (y/N) " -n 1 -r
-    echo
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        exit 1
-    fi
-fi
 
 # Colors
 RED='\033[0;31m'
