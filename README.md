@@ -12,7 +12,7 @@ Use Claude Code CLI, VS Code, JetBrains ACP, or chat bots through your own Anthr
 [![Code style: Ruff](https://img.shields.io/badge/code%20formatting-ruff-f5a623.svg?style=for-the-badge)](https://github.com/astral-sh/ruff)
 [![Logging: Loguru](https://img.shields.io/badge/logging-loguru-4ecdc4.svg?style=for-the-badge)](https://github.com/Delgan/loguru)
 
-Free Claude Code routes Anthropic Messages API traffic from Claude Code to NVIDIA NIM, Kimi, Wafer, OpenRouter, DeepSeek, LM Studio, llama.cpp, or Ollama. It keeps Claude Code's client-side protocol stable while letting you choose free, paid, or local models.
+Free Claude Code routes Anthropic Messages API traffic from Claude Code to NVIDIA NIM, Kimi, Wafer, OpenRouter, DeepSeek, LM Studio, llama.cpp, Ollama, or OpenCode AI. It keeps Claude Code's client-side protocol stable while letting you choose free, paid, or local models.
 
 [Quick Start](#quick-start) · [Local Admin UI](#local-admin-ui) · [Providers](#choose-a-provider) · [Clients](#connect-claude-code) · [Configuration](#configuration-reference) · [Troubleshooting](#troubleshooting) · [Development](#development)
 
@@ -37,7 +37,7 @@ Free Claude Code routes Anthropic Messages API traffic from Claude Code to NVIDI
 ## What You Get
 
 - Drop-in proxy for Claude Code's Anthropic API calls.
-- Eight provider backends: NVIDIA NIM, Kimi, Wafer, OpenRouter, DeepSeek, LM Studio, llama.cpp, and Ollama.
+- Nine provider backends: NVIDIA NIM, Kimi, Wafer, OpenRouter, DeepSeek, LM Studio, llama.cpp, Ollama, and OpenCode AI.
 - Per-model routing: send Opus, Sonnet, Haiku, and fallback traffic to different providers.
 - Native Claude Code `/model` picker support through the proxy's `/v1/models` endpoint (Claude Code must opt in to Gateway model discovery; see [Model Picker](#model-picker)).
 - Streaming, tool use, reasoning/thinking block handling, and local request optimizations.
@@ -141,7 +141,7 @@ provider/lab/model
 | <img src="https://cdn.simpleicons.org/nvidia/76B900" alt="" width="18" height="18">&nbsp;NVIDIA NIM | `nvidia_nim/...` | OpenAI chat translation | `NVIDIA_NIM_API_KEY` | `https://integrate.api.nvidia.com/v1` |
 | <img src="https://raw.githubusercontent.com/lobehub/lobe-icons/refs/heads/master/packages/static-avatar/avatars/kimi.webp" alt="" width="18" height="18">&nbsp;Kimi | `kimi/...` | OpenAI chat translation | `KIMI_API_KEY` | `https://api.moonshot.ai/v1` |
 | <img src="https://wafer.ai/favicon.ico" alt="" width="18" height="18">&nbsp;[Wafer](https://wafer.ai) | `wafer/...` | Anthropic Messages | `WAFER_API_KEY` | `https://pass.wafer.ai/v1` |
-| <img src="https://cdn.simpleicons.org/openrouter/6C47FF" alt="" width="18" height="18">&nbsp;OpenRouter | `open_router/...` | Anthropic Messages | `OPENROUTER_API_KEY` | `https://openrouter.ai/api/v1` |
+| <img src="https://cdn.simpleicons.org/openai/009912" alt="" width="18" height="18">&nbsp;OpenCode AI | `opencode/...` | Anthropic Messages | `OPENCODE_API_KEY` | `https://opencode.ai/zen/v1` |
 | <img src="https://cdn.simpleicons.org/deepseek/4D6BFF" alt="" width="18" height="18">&nbsp;DeepSeek | `deepseek/...` | Anthropic Messages | `DEEPSEEK_API_KEY` | `https://api.deepseek.com/anthropic` |
 | <img src="https://github.com/lmstudio-ai.png?size=64" alt="" width="18" height="18">&nbsp;LM Studio | `lmstudio/...` | Anthropic Messages | none | `http://localhost:1234/v1` |
 | <img src="https://github.com/ggml-org.png?size=64" alt="" width="18" height="18">&nbsp;llama.cpp | `llamacpp/...` | Anthropic Messages | none | `http://localhost:8080/v1` |
@@ -215,6 +215,22 @@ MODEL="open_router/stepfun/step-3.5-flash:free"
 ```
 
 Browse [all models](https://openrouter.ai/models) or [free models](https://openrouter.ai/collections/free-models).
+
+</details>
+
+<details>
+<summary><img src="https://opencode.ai/favicon.ico" alt="" width="18" height="18">&nbsp;<b>OpenCode AI</b></summary>
+
+Get a key at [opencode.ai](https://opencode.ai).
+
+```dotenv
+OPENCODE_API_KEY="sk-your-opencode-key"
+MODEL="opencode/minimax-m2.5-free"
+```
+
+Browse [all models](https://opencode.ai/models) or use free tier models: `minimax-m2.5-free`, `ring-2.6-1t-free`, `nemotron-3-super-free`.
+
+This provider uses OpenCode's Zen API at `https://opencode.ai/zen/v1/messages`.
 
 </details>
 

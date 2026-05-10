@@ -1,13 +1,16 @@
 # Claude Code + OpenCode AI
 
-Run Claude Code with **OpenCode AI** provider using the free-claude-code proxy.
+**OpenCode-integrated Claude Code** — run Claude Code with OpenCode AI models for free!
+
+This is a modified version of free-claude-code that includes **built-in OpenCode AI support**. No separate proxy setup needed — just add your OpenCode API key and go!
 
 ## Features
 
-- Access **40+ models** from OpenCode AI (free tier)
+- Access **40+ models** from OpenCode AI
 - Includes Claude Opus, Sonnet, Haiku, Gemini, GPT, Qwen, MiniMax, and more
 - **Full permissions** mode or **safe mode** options
 - Easy one-command launcher scripts
+- Works with OpenCode's Zen API endpoint
 
 ## Requirements
 
@@ -85,10 +88,10 @@ This uses plain `claude` — will ask for permission when needed.
 
 ## How It Works
 
-1. **free-claude-code** runs a local proxy server at `http://127.0.0.1:8082`
-2. The proxy routes requests to OpenCode AI's API
+1. The launcher script starts a local proxy at `http://127.0.0.1:8082`
+2. The proxy routes requests to **OpenCode AI's Zen API** (`opencode.ai/zen/v1`)
 3. Claude Code connects to the proxy instead of directly to Anthropic
-4. You get access to all OpenCode models at their pricing
+4. You get access to all OpenCode AI models
 
 ## Troubleshooting
 
@@ -108,9 +111,9 @@ lsof -i :8082
 
 ## Contributing
 
-This project includes an OpenCode AI provider for [free-claude-code](https://github.com/Alishahryar1/free-claude-code).
+This project adds OpenCode AI as a provider for free-claude-code.
 
-To contribute the OpenCode provider back:
+To contribute the OpenCode provider back to the main project:
 1. Fork [free-claude-code](https://github.com/Alishahryar1/free-claude-code)
 2. Copy the OpenCode provider files to your fork
 3. Submit a pull request
