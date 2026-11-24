@@ -16,7 +16,7 @@ set -e
 # Configuration - use env var if set, otherwise Go plan API key (all 40+ models)
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
+API_KEY="${OPENCODE_API_KEY:?Set OPENCODE_API_KEY first}"
 MODEL="${1:-minimax-m2.5-free}"
 
 # Colors
@@ -31,6 +31,7 @@ echo -e "${YELLOW}Starting free-claude-code proxy...${NC}"
 cd ~/free-claude-code
 export OPENCODE_API_KEY="$API_KEY"
 export MODEL="opencode/$MODEL"
+mkdir -p "$HOME/.claude-opencode"
 uv run free-claude-code > /tmp/free-claude-code.log 2>&1 &
 PROXY_PID=$!
 
@@ -65,6 +66,7 @@ echo ""
 
 # Run Claude Code WITH full permissions (--dangerously-skip-permissions)
 echo -e "${YELLOW}Starting Claude Code with full permissions...${NC}"
+CLAUDE_CONFIG_DIR="$HOME/.claude-opencode" \
 ANTHROPIC_AUTH_TOKEN="freecc" \
 ANTHROPIC_BASE_URL="$PROXY_URL" \
 CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1 \

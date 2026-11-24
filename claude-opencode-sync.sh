@@ -1,30 +1,18 @@
 #!/bin/bash
-# Claude Code + OpenCode via free-claude-code proxy - WITH SESSION SYNC
+# Claude Code + OpenCode via free-claude-code proxy - separate config folder (no session sync)
 # Usage:
 #   ./claude-opencode-sync.sh                        # Free tier: minimax-m2.5-free
 #   OPENCODE_API_KEY="sk-..." ./claude-opencode-sync.sh qwen3.6-plus  # Go plan model
 
 set -e
 
-# Session sync
-SESSION_DIR="$HOME/.claude/projects"
-DEST_DIR="$SESSION_DIR/-Users-armaan-free-claude-code"
-echo "Syncing sessions..."
-mkdir -p "$DEST_DIR"
-COUNT=0
-for file in $(find "$SESSION_DIR" -name "*.jsonl" -type f 2>/dev/null); do
-    fname=$(basename "$file")
-    dest="$DEST_DIR/$fname"
-    [ ! -f "$dest" ] || [ "$file" -nt "$dest" ] && cp "$file" "$dest" && COUNT=$((COUNT + 1))
-done
-echo "Synced $COUNT session files"
 
 cd ~/free-claude-code
 
 # Configuration
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
+API_KEY="${OPENCODE_API_KEY:?Set OPENCODE_API_KEY first}"
 MODEL="${1:-minimax-m2.5-free}"
 
 # Colors
@@ -60,8 +48,10 @@ echo -e "${GREEN}Proxy URL: $PROXY_URL${NC}"
 echo -e "${GREEN}Model: $MODEL${NC}"
 echo ""
 
+mkdir -p "$HOME/.claude-opencode"
 # Run Claude Code WITH full permissions
 echo -e "${YELLOW}Starting Claude Code with full permissions...${NC}"
+CLAUDE_CONFIG_DIR="$HOME/.claude-opencode" \
 ANTHROPIC_AUTH_TOKEN="freecc" \
 ANTHROPIC_BASE_URL="$PROXY_URL" \
 CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1 \

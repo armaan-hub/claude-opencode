@@ -6,21 +6,12 @@
 
 set -e
 
-# Session sync
-SESSION_DIR="$HOME/.claude/projects"
-DEST_DIR="$SESSION_DIR/-Users-armaan-free-claude-code"
-mkdir -p "$DEST_DIR"
-for file in $(find "$SESSION_DIR" -name "*.jsonl" -type f 2>/dev/null); do
-    dest="$DEST_DIR/$(basename "$file")"
-    [ ! -f "$dest" ] || [ "$file" -nt "$dest" ] && cp "$file" "$dest"
-done
-
 cd ~/free-claude-code
 
 # Configuration
 PROXY_PORT=8082
 PROXY_URL="http://127.0.0.1:$PROXY_PORT"
-API_KEY="${OPENCODE_API_KEY:-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS}"
+API_KEY="${OPENCODE_API_KEY:?Set OPENCODE_API_KEY first}"
 MODEL="${1:-minimax-m2.5-free}"
 
 # Colors
@@ -34,6 +25,7 @@ echo -e "${YELLOW}Starting free-claude-code proxy...${NC}"
 # Start free-claude-code proxy in background
 export OPENCODE_API_KEY="$API_KEY"
 export MODEL="opencode/$MODEL"
+mkdir -p "$HOME/.claude-opencode"
 uv run free-claude-code > /tmp/free-claude-code.log 2>&1 &
 PROXY_PID=$!
 
@@ -58,6 +50,7 @@ echo ""
 
 # Run Claude Code WITH full permissions
 echo -e "${YELLOW}Starting Claude Code with full permissions...${NC}"
+CLAUDE_CONFIG_DIR="$HOME/.claude-opencode" \
 ANTHROPIC_AUTH_TOKEN="freecc" \
 ANTHROPIC_BASE_URL="$PROXY_URL" \
 CLAUDE_CODE_ENABLE_GATEWAY_MODEL_DISCOVERY=1 \

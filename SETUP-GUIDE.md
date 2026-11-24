@@ -107,7 +107,7 @@ https://opencode.ai
 
 Your API key looks like this:
 ```
-sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS
+sk-YOUR-KEY-HERE
 ```
 
 ---
@@ -171,7 +171,7 @@ cat .env
 
 It should look like:
 ```
-OPENCODE_API_KEY=sk-6Tszrv9jKUGmaE0NzhsuoGJTocujNLvALYzWdzIlbKWaXMRqKKXMunoGVqtTBmCS
+OPENCODE_API_KEY=sk-YOUR-KEY-HERE
 MODEL=opencode/minimax-m2.5-free
 ```
 
